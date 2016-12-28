@@ -76,6 +76,13 @@ input.ng-invalid {
 			<p>ng-pending</p>
 			<p>ng-pristine</p>
 		</form>
+		<button ng-disabled="true">ng-disabled</button>
+		<div ng-init="hour=12">
+			<div ng-show="hour > 12">bigger than 12</div>
+			<div ng-show="hour > 11">bigger than 11</div>
+			<div ng-hide="hour < 12">small than 12</div>
+			<div ng-hide="hour < 13">small than 13</div>
+		</div>
 	</div>
 	<script type="text/javascript">
 	var app = angular.module('myApp', []);

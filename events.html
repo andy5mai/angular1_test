@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link href="css/bootstrap.min.css" rel="stylesheet">
+<link href="css/index.css" rel="stylesheet">
+<script src="js/jquery.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/angular.min.js"></script>
+
+</head>
+<body>
+	<p style="color:red;">An AngularJS event will not overwrite an HTML event, both events will be executed.</p>
+	<ul style="color:red;">
+		<li>ng-blur</li>
+		<li>ng-change</li>
+		<li>ng-click</li>
+		<li>ng-copy</li>
+		<li>ng-cut</li>
+		<li>ng-dblclick</li>
+		<li>ng-focus</li>
+		<li>ng-keydown</li>
+		<li>ng-keypress</li>
+		<li>ng-keyup</li>
+		<li>ng-mousedown</li>
+		<li>ng-mouseenter</li>
+		<li>ng-mouseleave</li>
+		<li>ng-mousemove</li>
+		<li>ng-mouseover</li>
+		<li>ng-mouseup</li>
+		<li>ng-paste</li>
+	</ul>
+	<p style="color:red;">An AngularJS event will not overwrite an HTML event, both events will be executed.</p>
+	<div ng-app="myApp" ng-controller="myCtrl">
+		<h1 ng-mousemove="count = count + 1">Mouse over me!</h1>
+		<h2>{{count}}</h2>
+		<button ng-click="count = count + 1">Click me!</button>
+		<button ng-click="myFunc()">Click me 2!</button>
+		<button ng-click="myShow()">Click me 3!</button>
+		<div ng-show="showme">Show me!</div>
+		<h1 ng-mousemove="myMouseMove($event)">Mouse over me 2!</h1>
+		<h2>x : {{x}}, y : {{y}}</h2>
+	</div>
+	<script type="text/javascript">
+		var app = angular.module('myApp', []);
+		
+		app.controller('myCtrl', function($scope) {
+			$scope.count = 0;
+			
+			$scope.myFunc = function() {
+				return $scope.count ++;
+			};
+			
+			$scope.showme = true;
+			$scope.myShow = function() {
+				$scope.showme = !$scope.showme;
+			}
+			
+			$scope.myMouseMove = function($event) {
+				$scope.x = $event.clientX;
+				$scope.y = $event.clientY;
+			}
+		})
+		
+	</script>
+</body>
+</html>

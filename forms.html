@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link href="css/bootstrap.min.css" rel="stylesheet">
+<link href="css/index.css" rel="stylesheet">
+<script src="js/jquery.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/angular.min.js"></script>
+
+</head>
+<body>
+	<p style="color:red;">Input controls are the HTML input elements:</p>
+	<ul style="color:red;">
+		<li>input elements</li>
+		<li>select elements</li>
+		<li>button elements</li>
+		<li>textarea elements</li>
+	</ul>
+	<div ng-app="myApp" ng-controller="myCtrl">
+		<form novalidate>
+			<p>The novalidate of form attribute is new in HTML5. It disables any default browser validation.</p>
+			<p>The novalidate attribute is not needed for this application, but normally you will use it in AngularJS forms, to override standard HTML5 validation.</p>
+			
+			click : <input type="checkbox" ng-model="show" />
+			<div ng-show="show">Now You See Me!</div>
+			pick a topic:
+			<input type="radio" ng-model="radioValue" value="dogs"> Dogs
+			<input type="radio" ng-model="radioValue" value="tuts"> Tutorials
+			<input type="radio" ng-model="radioValue" value="cars"> Cars
+			first name : <input type="text" ng-model="user.firstName">
+			last name : <input type="text" ng-model="user.lastName">
+			<button ng-click="reset()">reset</button>
+		</form>
+	</div>
+	
+	<script type="text/javascript">
+		var app = angular.module('myApp', []);
+		
+		app.controller('myCtrl', function($scope) {
+			$scope.show = true;
+			$scope.radioValue = "tuts";
+			
+			$scope.oriUser = { firstName : "John", 
+							lastName : "Woo" };
+			$scope.reset = function() {
+				$scope.user = angular.copy($scope.oriUser);
+			}
+			$scope.reset();
+		})
+		
+	</script>
+</body>
+</html>
