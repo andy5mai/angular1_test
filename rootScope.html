@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link href="css/bootstrap.min.css" rel="stylesheet">
+<link href="css/index.css" rel="stylesheet">
+<script src="js/jquery.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/angular.min.js"></script>
+
+<link href="css/testFavoriteColor.css" rel="stylesheet">
+
+</head>
+<body>
+	<div ng-app="myApp">
+		<p> The rootScope's favorite color : </p>
+		<h1> {{color}} </h1>
+		<div ng-controller="myCtrl">
+			<p> the scope of the controller's favorite color :</p>
+			<h1> {{color}} </h1>
+		</div>
+		<p>The rootScope's favorite color is still : </p>
+		<h1> {{color}} </h1>
+	</div>
+	<script type="text/javascript">
+		var app = angular.module('myApp', []);
+		app.run(function($rootScope) {
+			$rootScope.color = "blue";
+		})
+		
+		app.controller('myCtrl', function($scope) {
+			$scope.color = "red";
+		});
+	
+	</script>
+</body>
+</html>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link href="css/bootstrap.min.css" rel="stylesheet">
+<link href="css/index.css" rel="stylesheet">
+<script src="js/jquery.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/angular.min.js"></script>
+
+</head>
+<body>
+	<div ng-app="myApp">
+		<div ng-controller="test" ng-model="value"> {{value}}</div>
+		<div ng-controller="myHttp">
+			&nbsp;&nbsp;{{result}}
+			<p style="color:red;">&nbsp;&nbsp; The response from the server is an object with these properties:</p>
+			<p style="color:red;">&nbsp;&nbsp;.config the object used to generate the request.</p>
+			<p style="color:red;">&nbsp;&nbsp;.data a string, or an object, carrying the response from the server.</p>
+			<p style="color:red;">&nbsp;&nbsp;.headers a function to use to get header information.</p>
+			<p style="color:red;">&nbsp;&nbsp;.status a number defining the HTTP status.</p>
+			<p style="color:red;">&nbsp;&nbsp;.statusText a string defining the HTTP status.</p>
+			<p>&nbsp;&nbsp;status code : {{statusCode}}</p>
+			<p>&nbsp;&nbsp;status text : {{statusText}}</p>
+		</div>
+		<div ng-controller="myHttpJson">
+			&nbsp;&nbsp;{{myData}}
+		</div>
+	</div>
+	<script type="text/javascript">
+		var app = angular.module('myApp', []);
+		
+		app.controller('test', function($scope) {
+			$scope.value = "test";
+		})
+		
+		app.controller('myHttp', function($scope, $http) {
+			//$http is an XMLHttpRequest object for requesting external data.
+			$http({method: "GET",
+				   url: "myHttp.html"})
+			.then(function success(response) {
+				//First function handles success
+				console.log('success');
+				$scope.result = response.data
+				$scope.statusCode = response.status;
+				$scope.statusText = response.statustext;
+			}, function error(response) {
+				//Second function handles error
+				console.log('failed!');
+				$scope.result = response.statusText;
+				$scope.statusCode = response.status;
+				$scope.statusText = response.statustext;
+			});
+		});
+		
+		app.controller('myHttpJson', function($scope, $http) {
+			//$http.get() reads JSON data 
+			$http.get('../test/json/api').then(function(response) {
+				console.log(response.data);
+				$scope.myData = response.data;
+			});
+		});
+		
+	
+	</script>
+</body>
+</html>

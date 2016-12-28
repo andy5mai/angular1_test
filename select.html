@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link href="css/bootstrap.min.css" rel="stylesheet">
+<link href="css/index.css" rel="stylesheet">
+<script src="js/jquery.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/angular.min.js"></script>
+</head>
+<body>
+	<div ng-app="myApp" ng-controller="myCtrl">
+		<select ng-model="selectedName" ng-options="x.name for x in names">
+		</select>
+		You selected : <input type="text" ng-model="selectedName.name" />
+		<br>
+		<pre style="color:red">
+		if you use the select type below and you want to set the selected value, then you have to display the value of option
+		or the selected value will not active.
+		</pre>
+		<select ng-model="selectedName2">
+			<option ng-repeat="x in names" value="{{x.name}}"> {{x.name}} </option>
+		</select>
+		You selected : <input type="text" ng-model="selectedName2" />
+		<br>
+		<select ng-model="selectedOption" ng-options="x for x in options">
+		</select>
+		<select ng-model="selectedCountry">
+			<option ng-repeat="x in names" value="{{x.country}}">{{x.country}}</option>
+		</select>
+		You selected : <input type="text" ng-model="selectedCountry" />
+		<p> car : </p>
+		<select ng-model="selectedCar" ng-options="x for (x, y) in cars">
+		</select>
+		You selected : {{selectedCar}}
+		<p> car2 : </p>
+		<select ng-model="selectedCar2" ng-options="y.model for (x, y) in cars2">
+		</select>
+		You selected : {{selectedCar2}}
+		<pre style="color:red;">
+		Because the ng-repeat directive repeats a block of HTML code for each item in an array,	it can be used to 
+		create options in a dropdown list, but the ng-options directive was made especially for filling a dropdown
+		 list with options, and has at least one important advantage:
+
+		Dropdowns made with ng-options allows the selected value to be an object, while dropdowns made from ng-repeat
+		 has to be a string.
+		</pre>
+	</div>
+	<script type="text/javascript">
+		var app = angular.module('myApp', []);
+		
+		app.controller('myCtrl', function($scope) {
+			
+			$scope.names = [
+			                {name:'Jani',country:'Norway'},
+			                {name:'Carl',country:'Sweden'},
+			                {name:'Margareth',country:'England'},
+			                {name:'Hege',country:'Norway'},
+			                {name:'Joe',country:'Denmark'},
+			                {name:'Gustav',country:'Sweden'},
+			                {name:'Birgit',country:'Denmark'},
+			                {name:'Mary',country:'England'},
+			                {name:'Kai',country:'Norway'}
+			                ];
+			
+			$scope.selectedName = $scope.names[1];
+			$scope.selectedName2 = "Gustav";
+			
+			$scope.options = ['test1', 'test2', 'test3', 'test4', 'test5'];
+			
+			$scope.selectedOption = "test1";
+			$scope.selectedCountry = "Norway";
+			
+			$scope.cars = { car1 : "Ford",
+						    car2 : "Fiat",
+						    car3 : "Volvo" };
+			
+			$scope.selectedCar = $scope.cars.car3;
+			
+			$scope.cars2 = { car1 : {brand : "Ford", model : "Mustang", color : "red"},
+							 car2 : {brand : "Fiat", model : "500", color : "white"}, 
+							 car3 : {brand : "Volvo", model : "XC90", color : "black"} };
+			
+			$scope.selectedCar2 = $scope.cars2.car2;
+		});
+		
+	</script>
+</body>
+</html>

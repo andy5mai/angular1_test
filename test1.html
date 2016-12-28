@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link href="css/bootstrap.min.css" rel="stylesheet">
+<link href="css/index.css" rel="stylesheet">
+<script src="js/jquery.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/angular.min.js"></script>
+
+<link href="css/testFavoriteColor.css" rel="stylesheet">
+<style>
+input.ng-invalid {
+	background-color: lightpink;
+}
+</style>
+
+</head>
+<body>
+	<div ng-app="myApp">
+		<div ng-controller="myCtrl">
+		First Name : <input type="text" ng-model="firstName"><br>
+		Last Name : <input type="text" ng-model="lastName"><br>
+		<p style="color:red;">The ng-model directive provides a two-way binding between the model and the view.</p>
+		Favorite Color : <input type="text" class="{{favoriteColor}}" ng-model="favoriteColor" />
+		<br>
+		Full Name : {{firstName + " " + lastName}}
+		<p>Full Name (by method) : {{fullName()}}</p>
+		<br>
+		array index : <input type="text" ng-model="arrIndex"  />
+		, value is <input type="text" value="{{arr[arrIndex]}}" />
+		, two way bind value is <input type="text" ng-model="arr[arrIndex]" />
+		<br>
+		<li ng-repeat="a in arr">
+			{{a}}
+		</li>
+		</div>
+		<div w3-test-directive></div>
+		<br>
+		<w3-test-directive></w3-test-directive>
+		<br>
+		<div class="w3-test-direct-class"></div>
+		<br>
+		<!-- directive: w3-test-direct-replace -->
+		<br>
+		<div ng-controller="myCtrl1">
+			{{text}}
+		</div>
+		<p ng-controller="myCtrl" ng-bind="firstName"></p>
+		<div ng-controller="myCtrl">
+			<h1 ng-click="clickH1()">{{clickStatus}}</h1>
+		</div>
+		<form name="myForm">
+			The ng-model directive can provide type validation for application data (number, e-mail, required):
+			<br>
+			If the property in the ng-model attribute does not exist, AngularJS will create one for you.
+			<br>
+			Email : <input type="email" name="myAddress" ng-model="text" required>
+            <p style="color:red;">//If the property in the ng-model attribute does not exist, AngularJS will create one for you.</p>
+			<span ng-show="myForm.myAddress.$error.email">Not a valid e-mail address</span>
+			<h1>Status</h1>
+			{{myForm.myAddress.$valid}}
+			<br>
+			{{myForm.myAddress.$dirty}}
+			<br>
+			{{myForm.myAddress.$touched}}
+			<p style="color:red;">The ng-model directive adds/removes the following classes, according to the status of the form field:</p>
+			<p>ng-empty</p>
+			<p>ng-not-empty</p>
+			<p>ng-touched</p>
+			<p>ng-untouched</p>
+			<p>ng-valid</p>
+			<p>ng-invalid</p>
+			<p>ng-dirty</p>
+			<p>ng-pending</p>
+			<p>ng-pristine</p>
+		</form>
+	</div>
+	<script type="text/javascript">
+	var app = angular.module('myApp', []);
+	app.controller('myCtrl', function($scope) {
+		//In AngularJS, $scope is the application object (the owner of application variables and functions).
+		//The scope is the binding part between the HTML (view) and the JavaScript (controller).
+		//The scope is a JavaScript object with properties and methods, which are available for both the view and the controller.
+		//if you use myCtrl in html tag three times, this function will be called with three times.
+		$scope.firstName = "first Name";
+		$scope.lastName = "Last Name";
+
+		$scope.fullName = function() {
+			return $scope.firstName + " " + $scope.lastName;
+		}
+		
+		$scope.arr = [1, 2, 3, 4];
+		
+		$scope.clickStatus = "click here to trigger clickH1 function!"
+		$scope.clickH1 = function() {
+			$scope.clickStatus = "h1 has been clicked!";
+		};
+		console.log($scope);
+	});
+	
+	app.directive('w3TestDirective', function() {
+		return {
+			template : " I was made in a directive constructor!"
+		};
+	});
+	
+	/*
+	The legal restrice values are:
+	E for Element name
+	A for Attribute
+	C for Class
+	M for Comment
+	
+	By default the value is EA, meaning that both Element names and attribute names can invoke the directive.
+	*/
+	
+	app.directive('w3TestDirectClass', function() {
+		return {
+			restrict : "C",
+			template : "<h1>Made by a directive!</h1>"
+		};
+	});
+	
+	app.directive('w3TestDirectReplace', function() {
+		return {
+			restrict : "M",
+			replace : true,
+			template : "<h1>Replace mark by a directive!</h1>"
+		};
+	});
+	</script>
+	<script src="js/myCtrl1.js"></script>
+</body>
+</html>
