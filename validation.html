@@ -8,7 +8,24 @@
 <script src="js/jquery.js"></script>
 <script src="js/bootstrap.min.js"></script>
 <script src="js/angular.min.js"></script>
+<style>
+input.ng-invalid-required {
+	background-color:pink;
+}
 
+input.ng-valid-required {
+	background-color:yellow;
+}
+
+form.ng-pristine {
+	background-color:lightblue;
+}
+
+form.ng-dirty {
+	background-color:pink;
+}
+
+</style>
 </head>
 <body>
 	<p style="color:red;">AngularJS monitors the state of the form and input fields (input, textarea, select), and lets you notify the user about the current state.</p>
@@ -20,6 +37,7 @@
 				<tr>
 					<td>
 						<input name="myInput" ng-model="myInput" required><h1>{{myForm.myInput.$valid}}</h1>
+						<span ng-show="myForm.myInput.$touched && myForm.myInput.$invalid">The name is required!</span>
 					</td>
 				</tr>
 				<tr>
@@ -28,8 +46,84 @@
 					</td>
 				</tr>
 			</table>
-			
-			
+			<p style="color:red;">
+			Input fields have the following states:
+			</p>
+			<ul style="color:red;">
+				<li>$untouched The field has not been touched yet</li>
+				<li>$touched The field has been touched</li>
+				<li>$pristine The field has not been modified yet</li>
+				<li>$dirty The field has been modified</li>
+				<li>$invalid The field content is not valid</li>
+				<li>$valid The field content is valid</li>
+			</ul>
+			<p style="color:red;">
+			They are all properties of the input field, and are either true or false.
+			</p>
+			<p style="color:red;">
+			Forms have the following states:
+			</p>
+			<ul style="color:red;">
+				<li>$pristine No fields have been modified yet</li>
+				<li>$dirty One or more have been modified</li>
+				<li>$invalid The form content is not valid</li>
+				<li>$valid The form content is valid</li>
+				<li>$submitted The form is submitted</li>
+			</ul>
+			<p style="color:red;">
+			They are all properties of the form, and are either true or false.
+			</p>
+			<p style="color:red;">
+			AngularJS adds CSS classes to forms and input fields depending on their states.
+
+			The following classes are added to, or removed from, input fields:
+			</p>
+			<ul style="color:red;">
+				<li>ng-untouched The field has not been touched yet</li>
+				<li>ng-touched The field has been touched</li>
+				<li>ng-pristine The field has not been  modified yet</li>
+				<li>ng-dirty The field has been modified</li>
+				<li>ng-valid The field content is valid</li>
+				<li>ng-invalid The field content is not valid</li>
+				<li>ng-valid-key One key for each validation. Example: ng-valid-required, useful when there are more than one thing that must be validated</li>
+				<li>ng-invalid-key Example: ng-invalid-required</li>
+			</ul>
+			<p style="color:red;">
+			The following classes are added to, or removed from, forms:
+			</p>
+			<ul style="color:red;">
+				<li>ng-pristine No fields has not been modified yet</li>
+				<li>ng-dirty One or more fields has been modified</li>
+				<li>ng-valid The form content is valid</li>
+				<li>ng-invalid The form content is not valid</li>
+				<li>ng-valid-key One key for each validation. Example: ng-valid-required, useful when there are more than one thing that must be validated</li>
+				<li>ng-invalid-key Example: ng-invalid-required</li>
+			</ul>
+			<p style="color:red;">
+			The classes are removed if the value they represent is false.
+			</p>
+			<p style="color:blue;">
+			Custom Validation
+			</p>
+			<p style="color:blue;">
+			To create your own validation function is a bit more tricky. You have to add a new directive to your application, and deal with the validation inside a function with certain specified arguments.
+			</p>
+			<p style="color:red;">
+			Remember, when naming a directive, you must use a camel case name, myDirective, but when invoking it, you must use - separated name, my-directive.
+			</p>
+			<p style="color:red;">
+			Then, return an object where you specify that we require  ngModel, which is the ngModelController.
+			</p>
+			<p style="color:red;">
+			Make a linking function which takes some arguments, where the fourth argument, mCtrl, is the ngModelController,
+			</p>
+			<p style="color:red;">
+			Then specify a function, in this case named myValidation, which takes one argument, this argument is the value of the input element.
+			</p>
+			<p style="color:red;">
+			At last, mCtrl.$parsers.push(myValidation); will add the myValidation function to an array of other functions, which will be executed every time the input value changes.
+			</p>
+			<input name="myCustomInput" ng-model="myCustomInput" valid-e /><h1>{{myForm.myCustomInput.$valid}}</h1>
 		</form>
 	</div>
 	
@@ -38,7 +132,27 @@
 		
 		app.controller('myCtrl', function($scope) {
 			
-		})
+		});
+		
+		app.directive('validE', function() {
+			return {
+				require : 'ngModel',
+				link : function(scope, element, attr, mCtrl) {
+					function myValidation(value) {
+						if (value.indexOf("e") > -1) {
+							console.log("valid true with value: " + value);
+							mCtrl.$setValidity('charE', true);
+						} else {
+							console.log("valid false");
+							mCtrl.$setValidity('charE', false);
+						}
+						return value;
+					}
+					mCtrl.$parsers.push(myValidation);
+				}
+			};
+		});
+		
 		
 	</script>
 </body>

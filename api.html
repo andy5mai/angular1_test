@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link href="css/bootstrap.min.css" rel="stylesheet">
+<link href="css/index.css" rel="stylesheet">
+<script src="js/jquery.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/angular.min.js"></script>
+
+</head>
+<body>
+	<div ng-app="myApp" ng-controller="myCtrl">
+	<input type="text" ng-model="x1" ng-change="changeX()"/>
+	<p>x1 : {{x1}}</p>
+	<p>x2 : {{x2}}</p>
+	<p>x3 : {{x3}}</p>
+	<p>isString : {{x4}}</p>
+	<p style="color:red;"> if you use angular.isNumber function, it will return true when value is NaN.</p>
+	<p style="color:red;"> use isFinite() or use angular.isNumber() with !isNaN()</p>
+	<p>isNumber : {{x5}}</p>
+	<p>x5 : {{x6}}</p>
+	</div>
+	
+	<script type="text/javascript">
+		var app = angular.module('myApp', []);
+		
+		app.controller('myCtrl', function($scope) {
+			$scope.x1 = "John";
+			$scope.changeX = function() {
+				$scope.x2 = angular.lowercase($scope.x1);
+				$scope.x3 = angular.uppercase($scope.x1);
+				$scope.x4 = angular.isString($scope.x1);
+				$scope.x5 = angular.isNumber(parseInt($scope.x1)) && !isNaN(parseInt($scope.x1));
+				$scope.x6 = parseInt($scope.x1);
+				console.log($scope.x5);
+			}
+			
+			$scope.changeX();
+		});
+		
+	</script>
+</body>
+</html>

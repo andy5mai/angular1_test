@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link href="css/bootstrap.min.css" rel="stylesheet">
+<link href="css/index.css" rel="stylesheet">
+<script src="js/jquery.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/angular.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-animate.js"></script>
+<style>
+div {
+  transition: all linear 0.5s;
+  background-color: lightblue;
+  height: 100px;
+  width: 100%;
+  position: relative;
+  top: 0;
+  left: 0;
+}
+
+.ng-hide {
+  height: 0;
+  width: 0;
+  background-color: transparent;
+  top:-200px;
+  left: 200px;
+}
+
+@keyframes myChange {
+	from {
+		height: 100px;
+	} to {
+		height: 0;
+	}
+}
+
+div.testMyChange {
+	height: 0px;
+	background-color:yellow;
+	animation : 2s myChange;
+}
+</style>
+</head>
+<body ng-app="myApp">
+	<p style="color:blue;">
+	The ngAnimate module does not animate your HTML elements, but when ngAnimate notice certain events,
+	</p>
+	<p style="color:blue;">like hide or show of an HTML element, the element gets some pre-defined classes which can be used to make animations.</p>
+	<p style="color:blue;">The directives in AngularJS who add/remove classes are:</p>
+	<ul style="color:red;">
+		<li>ng-show</li>
+		<li>ng-hide</li>
+		<li>ng-class</li>
+		<li>ng-view</li>
+		<li>ng-include</li>
+		<li>ng-repeat</li>
+		<li>ng-if</li>
+		<li>ng-switch</li>
+	</ul>
+	<p style="color:blue;">The other directives adds a ng-enter class value when they enter the DOM, and a ng-leave attribute when they are removed from the DOM.</p>
+	<p style="color:blue;">The ng-repeat directive also adds a ng-move class value when the HTML element changes position.</p>
+	<p style="color:blue;">In addition, during the animation, the HTML element will have a set of class values, which will be removed when the animation</p>
+	<p style="color:blue;">has finished. Example: the ng-hide directive will add these class values:</p>
+	<ul style="color:red;">
+		<li>ng-animate</li>
+		<li>ng-hide-animate</li>
+		<li>ng-hide-add (if the element will be hidden)</li>
+		<li>ng-hide-remove (if the element will be showed)</li>
+		<li>ng-hide-add-active (if the element will be hidden)</li>
+		<li>ng-hide-remove-active (if the element will be showed)</li>
+	</ul>
+	Hide the DIV : <input type="checkbox" ng-model="myCheck" />
+	<div ng-hide="myCheck">Hide This!!!</div>
+	<div ng-show="myCheck">Show This!!!</div>
+	<div class="testMyChange">123456</div>
+	<script type="text/javascript">
+		var app = angular.module('myApp', ['ngAnimate']);
+	</script>
+</body>
+</html>
